@@ -5,54 +5,66 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Day 1 Surprise</title>
   <link rel="stylesheet" href="style.css" />
+
   <style>
-      <style>
-  @media screen and (max-width: 768px) {
-    .day1-wrapper h1 {
-      font-size: 2.5rem;
+    body {
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+      background-color: #fff0f5;
     }
 
-    .day1-wrapper h3 {
-      font-size: 2rem;
+    #balloon-container {
+      min-height: 100vh; /* Full scrollable height */
+      padding: 1em;
+      box-sizing: border-box;
+      display: flex;
+      flex-wrap: wrap;
+      overflow: visible;
     }
 
-    .day1-wrapper p {
-      font-size: 1.4rem;
+    @media screen and (max-width: 768px) {
+      .day1-wrapper h1 {
+        font-size: 2.5rem;
+      }
+
+      .day1-wrapper h3 {
+        font-size: 2rem;
+      }
+
+      .day1-wrapper p {
+        font-size: 1.4rem;
+      }
+
+      .overlay-content {
+        max-width: 90%;
+        margin: 40px auto;
+      }
+
+      img.round-cake {
+        width: 220px;
+        height: 220px;
+      }
     }
 
-    .overlay-content {
-      max-width: 90%;
-      margin: 40px auto;
-    }
+    @media screen and (max-width: 480px) {
+      .day1-wrapper h1 {
+        font-size: 2rem;
+      }
 
-    img.round-cake {
-      width: 220px;
-      height: 220px;
-    }
-  }
+      .day1-wrapper h3 {
+        font-size: 1.6rem;
+      }
 
-  @media screen and (max-width: 480px) {
-    .day1-wrapper h1 {
-      font-size: 2rem;
-    }
+      .day1-wrapper p {
+        font-size: 1.2rem;
+      }
 
-    .day1-wrapper h3 {
-      font-size: 1.6rem;
+      img.round-cake {
+        width: 180px;
+        height: 180px;
+      }
     }
-
-    .day1-wrapper p {
-      font-size: 1.2rem;
-    }
-
-    img.round-cake {
-      width: 180px;
-      height: 180px;
-    }
-  }
-</style>
-
-  
-     
   </style>
 </head>
 <body>
@@ -61,7 +73,9 @@
     <div class="day1-wrapper">
       <div class="overlay-content">
         <h1>🎈 Day 1 Surprise 🎈</h1>
-        <p>You bring joy like balloons in the sky! <br> Babe you are the best part of my life with whom i spended more time than my boyfriend...You hold a special part in my life ! </p>
+        <p>You bring joy like balloons in the sky! <br>
+           Babe you are the best part of my life with whom I spent more time than my boyfriend... 
+           You hold a special part in my life!</p>
         <h3>Now 2 Days to go for your bday</h3>
         <img src="/images/52.jpg" class="round-cake" alt="Cake" />
       </div>
@@ -70,7 +84,10 @@
 
   <script src="script.js"></script>
   <script>
-    window.onload = () => createBalloons(30);
+    // Ensure balloon animation starts IMMEDIATELY
+    document.addEventListener("DOMContentLoaded", () => {
+      createBalloons(30);
+    });
   </script>
 </body>
 </html>

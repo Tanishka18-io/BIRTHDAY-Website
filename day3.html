@@ -4,127 +4,201 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Day 3 Celebration</title>
-  <link rel="stylesheet" href="style.css" />
   <style>
+    /* Optional fallback if Sellena not loaded */
+    @font-face {
+  font-family: 'Sellena';
+  src: url('SellenaBrush-x3JyK.ttf') format('truetype');
+}
+
     
-      <style>
-   @media screen and (max-width: 768px) {
-    .conta h1 {
-      font-size: 2.4rem;
+    body, button {
+     font-family: 'Sellena', cursive;
     }
 
-    .conta p {
-      font-size: 1.4rem;
+    html, body {
+      margin: 0;
+      padding: 0;
+      min-height: 100%;
+      background: #fff0f5;
+      overflow-x: hidden;
     }
 
-    img.round-cake {
-      width: 220px;
-      height: 220px;
-    }
+    canvas#confetti {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999; /* changed from 0 to 9999 */
+  pointer-events: none;
+}
 
-    button {
-      font-size: 1.2rem;
-      padding: 10px 20px;
-    }
-  }
 
-  @media screen and (max-width: 480px) {
     .conta {
-      padding: 10px;
-      transform: none;
-      top: auto;
-      left: auto;
-      position: static;
+      position: relative;
+      z-index: 2;
+      padding: 30px 20px;
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+      background: #fff0f5;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(255, 105, 180, 0.4);
     }
 
     .conta h1 {
-      font-size: 2rem;
+      font-size: 3rem;
+      color: #703956;
+      text-shadow: 1px 1px 2px #fff;
     }
 
     .conta p {
-      font-size: 1.2rem;
+      font-size: 2rem;
+      color: #5a4d0f;
+      text-shadow: 1px 1px 2px #fff;
     }
 
     img.round-cake {
-      width: 180px;
-      height: 180px;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin: 20px 0;
+      box-shadow: 0 0 20px rgba(255, 105, 180, 0.5);
     }
 
     button {
-      font-size: 1rem;
-      padding: 8px 15px;
+      padding: 12px 24px;
+      font-size: 2rem;
+      margin: 10px 8px;
+      border: none;
+      background: #c03976;
+      color: white;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s ease;
     }
-  }
-</style>
 
+    button:hover {
+      background: #f9b6d3;
+      color: #4b1d36;
+    }
+
+    @media (max-width: 768px) {
+      .conta h1 {
+        font-size: 2rem;
+      }
+
+      .conta p {
+        font-size: 1.1rem;
+      }
+
+      img.round-cake {
+        width: 220px;
+        height: 220px;
+      }
+
+      button {
+        font-size: 1.1rem;
+        padding: 10px 18px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .conta h1 {
+        font-size: 1.7rem;
+      }
+
+      .conta p {
+        font-size: 1rem;
+      }
+
+      img.round-cake {
+        width: 180px;
+        height: 180px;
+      }
+
+      button {
+        font-size: 1rem;
+        padding: 8px 14px;
+      }
+    }
   </style>
 </head>
 <body>
-  <div class="conta">
-    <h1>🥳 Day 3 Today is your Day 🥳</h1>
-    <p>Time to celebrate your beautiful existence!<br> My most happiest part ..you are the best in the world in the earth and in my life <br><b>LOVE YOU THE MOST &#x2665;</b></p>
-    <img src="/images/50.jpg" class="round-cake" alt="Cake" />
-    <br />
-    <button onclick="window.open('card.html', '_blank')">Open Birthday Card 🎂</button>
-    <br />
-    <button onclick="window.open('gallery.html', '_blank')">RIDE TO MEMORIES &hearts;</button>
-  </div>
   <canvas id="confetti"></canvas>
 
-  <script src="script.js"></script>
+  <div class="conta">
+    <h1>🥳 Day 3: Today is Your Day! 🥳</h1>
+    <p>
+      Time to celebrate your beautiful existence!<br />
+      You are the best in the world, on the earth, and in my life.<br />
+      <strong>LOVE YOU THE MOST ❤️</strong>
+    </p>
+    <img src="/images/50.jpg" alt="Cake" class="round-cake" />
+    <div>
+      <button onclick="window.open('card.html', '_blank')">Open Birthday Card 🎂</button>
+      <button onclick="window.open('gallery.html', '_blank')">RIDE TO MEMORIES ♥</button>
+    </div>
+  </div>
+
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      const confettiCanvas = document.getElementById("confetti");
-      const ctx = confettiCanvas.getContext("2d");
+      const canvas = document.getElementById("confetti");
+      const ctx = canvas.getContext("2d");
 
-      confettiCanvas.width = window.innerWidth;
-      confettiCanvas.height = window.innerHeight;
+      function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
 
+      resizeCanvas();
+      window.addEventListener("resize", resizeCanvas);
+
+      const confettiColors = ["#FF007A", "#7A00FF", "#00FF7A", "#FFD700", "#00D4FF"];
       const confettis = [];
-      const colors = ["#FF007A", "#7A00FF", "#00FF7A", "#FFD700", "#00D4FF"];
 
       function createConfetti() {
-        const confetti = {
-          x: Math.random() * confettiCanvas.width,
-          y: Math.random() * confettiCanvas.height - confettiCanvas.height,
+        return {
+          x: Math.random() * canvas.width,
+          y: Math.random() * -canvas.height,
           size: Math.random() * 10 + 5,
-          color: colors[Math.floor(Math.random() * colors.length)],
-          speedX: Math.random() * 3 - 1.5,
-          speedY: Math.random() * 5 + 2,
+          color: confettiColors[Math.floor(Math.random() * confettiColors.length)],
+          speedX: Math.random() * 2 - 1,
+          speedY: Math.random() * 3 + 2,
           rotation: Math.random() * 360
         };
-        confettis.push(confetti);
       }
 
-      for (let i = 0; i < 200; i++) {
-        createConfetti();
+      for (let i = 0; i < 150; i++) {
+        confettis.push(createConfetti());
       }
 
-      function animateConfetti() {
-        ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
-        confettis.forEach((confetti, index) => {
-          confetti.x += confetti.speedX;
-          confetti.y += confetti.speedY;
-          confetti.rotation += confetti.speedX;
+      function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        confettis.forEach((c, i) => {
+          c.x += c.speedX;
+          c.y += c.speedY;
+          c.rotation += 1;
 
           ctx.save();
-          ctx.translate(confetti.x, confetti.y);
-          ctx.rotate((confetti.rotation * Math.PI) / 180);
-          ctx.fillStyle = confetti.color;
-          ctx.fillRect(-confetti.size / 2, -confetti.size / 2, confetti.size, confetti.size);
+          ctx.translate(c.x, c.y);
+          ctx.rotate((c.rotation * Math.PI) / 180);
+          ctx.fillStyle = c.color;
+          ctx.fillRect(-c.size / 2, -c.size / 2, c.size, c.size);
           ctx.restore();
 
-          if (confetti.y > confettiCanvas.height) {
-            confettis.splice(index, 1);
+          if (c.y > canvas.height) {
+            confettis[i] = createConfetti();
           }
         });
 
-        if (confettis.length > 0) {
-          requestAnimationFrame(animateConfetti);
-        }
+        requestAnimationFrame(animate);
       }
 
-      animateConfetti();
+      animate();
     });
   </script>
 </body>
