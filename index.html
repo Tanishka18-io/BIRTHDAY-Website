@@ -1,0 +1,62 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Birthday Countdown</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h1>🎉 Birthday Countdown 🎉</h1>
+  <p>My Beautiful BOMBONSITO ~ This countdown surprise is for you open this countdown according to the date .I hope you will like this my love ...</p>
+
+  <div class="button-container">
+    <button onclick="location.href='day1.html'">1 August->Surprise Day</button><br><br>
+    <button onclick="location.href='day2.html'">2 August->My Bff day is 1 day away</button><br><br>
+    <button onclick="location.href='day3.html'">3 August->Finally ! Its your BIRTHDAY</button>
+  </div>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Birthday Countdown</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .button-container button:disabled {
+      background-color: grey;
+      color: white;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎉 Birthday Countdown 🎉</h1>
+  <p>My Beautiful BOMBONSITO ~ This countdown surprise is for you. Open this countdown according to the date. I hope you will like this, my love ...</p>
+
+  <div class="button-container">
+    <button id="btn1" disabled onclick="location.href='day1.html'">1 August → Surprise Day</button><br><br>
+    <button id="btn2" disabled onclick="location.href='day2.html'">2 August → My BFF day is 1 day away</button><br><br>
+    <button id="btn3" disabled onclick="location.href='day3.html'">3 August → Finally! It's your BIRTHDAY</button>
+  </div>
+
+  <script>
+    const today = new Date();
+    const day = today.getDate();
+    const month = today.getMonth(); // 0 = Jan, 7 = August
+
+    const btn1 = document.getElementById("btn1");
+    const btn2 = document.getElementById("btn2");
+    const btn3 = document.getElementById("btn3");
+
+    if (month === 6) { // August
+      if (day >= 1) btn1.disabled = false;
+      if (day >= 2) btn2.disabled = false;
+      if (day >= 3) btn3.disabled = false;
+    }
+  </script>
+</body>
+</html>

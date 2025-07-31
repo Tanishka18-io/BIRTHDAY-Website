@@ -1,0 +1,84 @@
+@font-face {
+  font-family: 'Sellena';
+  src: url('SellenaBrush-x3JyK.ttf') format('truetype');
+}
+
+
+body {
+  font-family: 'Sellena', cursive;
+  background: #eec0c49e;
+  margin: 0;
+  padding: 20px;
+  text-align: center;
+}
+
+h1 {
+  margin-bottom: 30px;
+   font-size: 6rem;
+  margin-top:20px;
+  color: #703956;
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(550px, 1fr)); /* was 150px */
+  gap: 25px;
+  max-width: 1800px;
+  margin: auto;
+}
+
+.card {
+  perspective: 1000px;
+}
+
+.card-inner {
+  position: relative;
+  width: 100%;
+  padding-top: 100%;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+  cursor: default;
+}
+
+.card.flipped .card-inner {
+  transform: rotateY(180deg);
+}
+
+.card-front, .card-back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  backface-visibility: hidden;
+  border: 4px solid #43113d;
+  box-shadow: 0 4px 8px rgba(237, 182, 182, 15.0);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.card-front img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.card-front:hover img {
+  transform: scale(1.1);
+}
+
+.card-back {
+  background-color: #f1adbf63;
+  color: #334342;
+  transform: rotateY(180deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  font-weight: 400;
+  font-size: 2rem;
+  text-align: center;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+

@@ -1,0 +1,243 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Birthday Card</title>
+  <style>
+    @font-face {
+  font-family: 'Sellena';
+  src: url('SellenaBrush-x3JyK.ttf') format('truetype');
+}
+
+    body {
+      background: linear-gradient(to bottom right, #fef2f2, #fff6f9);
+      overflow-x: hidden;
+    }
+
+    canvas {
+      display: block;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .g {
+      position: relative;
+      z-index: 2;
+      top: 30px;
+      text-align: center;
+      color: #5d308d;
+      font-size: 5em;
+      font-weight: 900;
+            font-family: 'Sellena', cursive;
+
+      user-select: none;
+    }
+
+    .card-container {
+      padding: 40px;
+      position: relative;
+      z-index: 2;
+      text-align: center;
+    }
+
+    .card-container h1 {
+      font-size: 4rem;
+      color: #1b4881d4;
+      margin-bottom: 20px;
+      font-family: 'Sellena', cursive;
+      margin-top: 20px;
+    }
+
+    .card-container p {
+      color: rgb(109, 15, 15);
+      font-size: 2.5rem;
+      font-family: 'Sellena', cursive;
+    }
+
+    .message-box {
+      font-size: 1.5rem;
+      max-width: 800px;
+      margin: 60px auto;
+      background: #ffffffd1;
+      padding: 20px;
+      color: rgb(84, 84, 131);
+      border-radius: 15px;
+      box-shadow: 0 0 10px rgba(236, 146, 190, 0.874);
+    }
+
+    .round-cake {
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-top: 20px;
+      box-shadow: 0 0 20px rgba(255, 105, 180, 0.5);
+    }
+  </style>
+</head>
+<body>
+  <h1 class="g">Happy Birthday Suhani</h1>
+  <canvas id="birthday"></canvas>
+
+  <div class="card-container">
+    <h1><strong>🎂 Happy Birthday!</strong></h1>
+    <img src="/images/1.jpg" class="round-cake" alt="Cake" />
+    <div class="message-box">
+      <p>Dear Bestie,</p>
+      <p>
+        You’re not just my best friend—you’re my chosen family. Your smile lights up the darkest days and your kindness touches every soul. You were always there whenever I needed you. My life without you is unimaginable. You are my soul sister. If anything good or bad happens to me, I wanted you to be the first to know—like a little child telling everything in detail to her mom during happy or hard times. May our friendship last till the end of time. May you get everything you desire. May your birthday be as beautiful as your heart! 🎉💖
+      </p>
+      <p>With all my love,<br>Your BFF</p>
+      <h1>I LOVE YOU FOREVER & EVER & EVER</h1>
+    </div>
+  </div>
+
+  <script>
+    const PI2 = Math.PI * 2;
+    const random = (min, max) => (Math.random() * (max - min + 1) + min) | 0;
+    const timestamp = (_) => new Date().getTime();
+
+    class Birthday {
+      constructor() {
+        this.resize();
+        this.fireworks = [];
+        this.counter = 0;
+      }
+
+      resize() {
+        this.width = canvas.width = window.innerWidth;
+        this.height = canvas.height = window.innerHeight;
+        let center = (this.width / 2) | 0;
+        this.spawnA = (center - center / 4) | 0;
+        this.spawnB = (center + center / 4) | 0;
+        this.spawnC = this.height * 0.1;
+        this.spawnD = this.height * 0.5;
+      }
+
+      onClick(evt) {
+        let x = evt.clientX || (evt.touches && evt.touches[0].pageX);
+        let y = evt.clientY || (evt.touches && evt.touches[0].pageY);
+        let count = random(3, 5);
+        for (let i = 0; i < count; i++)
+          this.fireworks.push(
+            new Firework(
+              random(this.spawnA, this.spawnB),
+              this.height,
+              x,
+              y,
+              random(0, 260),
+              random(30, 110)
+            )
+          );
+        this.counter = -1;
+      }
+
+      update(delta) {
+        ctx.globalCompositeOperation = "destination-out";
+        ctx.fillStyle = `rgba(0, 0, 0, ${delta * 3})`; // fade effect with transparency
+        ctx.fillRect(0, 0, this.width, this.height);
+
+        ctx.globalCompositeOperation = "lighter";
+        for (let firework of this.fireworks) firework.update(delta);
+
+        this.counter += delta * 3;
+        if (this.counter >= 1) {
+          this.fireworks.push(
+            new Firework(
+              random(this.spawnA, this.spawnB),
+              this.height,
+              random(0, this.width),
+              random(this.spawnC, this.spawnD),
+              random(0, 360),
+              random(30, 110)
+            )
+          );
+          this.counter = 0;
+        }
+
+        if (this.fireworks.length > 1000)
+          this.fireworks = this.fireworks.filter(f => !f.dead);
+      }
+    }
+
+    class Firework {
+      constructor(x, y, targetX, targetY, shade, offsprings) {
+        this.dead = false;
+        this.offsprings = offsprings;
+        this.x = x;
+        this.y = y;
+        this.targetX = targetX;
+        this.targetY = targetY;
+        this.shade = shade;
+        this.history = [];
+      }
+
+      update(delta) {
+        if (this.dead) return;
+
+        let xDiff = this.targetX - this.x;
+        let yDiff = this.targetY - this.y;
+
+        if (Math.abs(xDiff) > 3 || Math.abs(yDiff) > 3) {
+          this.x += xDiff * 2 * delta;
+          this.y += yDiff * 2 * delta;
+          this.history.push({ x: this.x, y: this.y });
+          if (this.history.length > 20) this.history.shift();
+        } else {
+          if (this.offsprings && !this.madeChilds) {
+            let babies = this.offsprings / 2;
+            for (let i = 0; i < babies; i++) {
+              let targetX = (this.x + this.offsprings * Math.cos((PI2 * i) / babies)) | 0;
+              let targetY = (this.y + this.offsprings * Math.sin((PI2 * i) / babies)) | 0;
+              birthday.fireworks.push(
+                new Firework(this.x, this.y, targetX, targetY, this.shade, 0)
+              );
+            }
+            this.madeChilds = true;
+          }
+          this.history.shift();
+        }
+
+        if (this.history.length === 0) this.dead = true;
+        else if (this.offsprings) {
+          for (let i = 0; i < this.history.length; i++) {
+            let point = this.history[i];
+            ctx.beginPath();
+            ctx.fillStyle = "hsl(" + this.shade + ",100%," + i + "%)";
+            ctx.arc(point.x, point.y, 1, 0, PI2, false);
+            ctx.fill();
+          }
+        } else {
+          ctx.beginPath();
+          ctx.fillStyle = "hsl(" + this.shade + ",100%,50%)";
+          ctx.arc(this.x, this.y, 1, 0, PI2, false);
+          ctx.fill();
+        }
+      }
+    }
+
+    const canvas = document.getElementById("birthday");
+    const ctx = canvas.getContext("2d");
+
+    let then = timestamp();
+    const birthday = new Birthday();
+    window.onresize = () => birthday.resize();
+    document.onclick = (evt) => birthday.onClick(evt);
+    document.ontouchstart = (evt) => birthday.onClick(evt);
+
+    (function loop() {
+      requestAnimationFrame(loop);
+      let now = timestamp();
+      let delta = now - then;
+      then = now;
+      birthday.update(delta / 1000);
+    })();
+  </script>
+</body>
+</html>
