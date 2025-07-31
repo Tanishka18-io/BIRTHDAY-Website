@@ -34,12 +34,12 @@ function createBalloons(num) {
   }
 }
 
-function removeBalloons() {
-  balloonContainer.style.opacity = 0;
-  setTimeout(() => {
-    balloonContainer.remove()
-  }, 500)
-}
+// function removeBalloons() {
+//   balloonContainer.style.opacity = 0;
+//   setTimeout(() => {
+//     balloonContainer.remove()
+//   }, 500)
+// }
 
 window.addEventListener("load", () => {
   createBalloons(30)
