@@ -4,52 +4,97 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Day 1 Surprise</title>
-  <link rel="stylesheet" href="style.css" />
-
   <style>
-    body {
+
+     @font-face {
+  font-family: 'Sellena';
+  src: url('SellenaBrush-x3JyK.ttf') format('truetype');
+}
+
+    html, body {
       margin: 0;
       padding: 0;
-      overflow-x: hidden;
       background-color: #fff0f5;
+      overflow-x: hidden;
+      /* font-family: sans-serif; */
+       font-family: 'Sellena', cursive;
     }
 
     #balloon-container {
-      min-height: 100vh; /* Full scrollable height */
-      padding: 1em;
+      position: relative;
+      min-height: 100vh;
+      padding: 2em 1em;
       box-sizing: border-box;
       display: flex;
-      flex-wrap: wrap;
-      overflow: visible;
+      justify-content: center;
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    #floating-balloons {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .balloon {
+      width: 40px;
+      height: 60px;
+      border-radius: 50%;
+      position: absolute;
+    }
+
+    .day1-wrapper {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+      padding-top: 60px;
+    }
+
+    .day1-wrapper h1 {
+      font-size: 3rem;
+      color: #b2004c;
+    }
+
+    .day1-wrapper h3 {
+      font-size: 2.5rem;
+      color: #702963;
+    }
+
+    .day1-wrapper p {
+      font-size: 2rem;
+      color: #5e415f;
+    }
+
+    img.round-cake {
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin: 30px 0;
+      box-shadow: 0 0 20px rgba(255, 105, 180, 0.5);
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100vh);
+        opacity: 0;
+      }
     }
 
     @media screen and (max-width: 768px) {
       .day1-wrapper h1 {
-        font-size: 2.5rem;
-      }
-
-      .day1-wrapper h3 {
-        font-size: 2rem;
-      }
-
-      .day1-wrapper p {
-        font-size: 1.4rem;
-      }
-
-      .overlay-content {
-        max-width: 90%;
-        margin: 40px auto;
-      }
-
-      img.round-cake {
-        width: 220px;
-        height: 220px;
-      }
-    }
-
-    @media screen and (max-width: 480px) {
-      .day1-wrapper h1 {
-        font-size: 2rem;
+        font-size: 2.2rem;
       }
 
       .day1-wrapper h3 {
@@ -61,31 +106,81 @@
       }
 
       img.round-cake {
-        width: 180px;
-        height: 180px;
+        width: 200px;
+        height: 200px;
+      }
+    }
+
+    @media screen and (max-width: 480px) {
+      .day1-wrapper h1 {
+        font-size: 2rem;
+      }
+
+      .day1-wrapper h3 {
+        font-size: 1.4rem;
+      }
+
+      .day1-wrapper p {
+        font-size: 1rem;
+      }
+
+      img.round-cake {
+        width: 160px;
+        height: 160px;
       }
     }
   </style>
 </head>
 <body>
+  <div id="floating-balloons"></div>
 
   <div id="balloon-container">
     <div class="day1-wrapper">
-      <div class="overlay-content">
-        <h1>🎈 Day 1 Surprise 🎈</h1>
-        <p>You bring joy like balloons in the sky! <br>
-           Babe you are the best part of my life with whom I spent more time than my boyfriend... 
-           You hold a special part in my life!</p>
-        <h3>Now 2 Days to go for your bday</h3>
-        <img src="/images/52.jpg" class="round-cake" alt="Cake" />
-      </div>
+      <h1>🎈 Day 1 Surprise 🎈</h1>
+      <p>
+        You bring joy like balloons in the sky!<br>
+        Babe, you are the best part of my life with whom I spent more time than my boyfriend...<br>
+        You hold a special part in my life!
+      </p>
+      <h3>Now 2 Days to go for your bday</h3>
+      <img src="/images/52.jpg" class="round-cake" alt="Cake" />
     </div>
   </div>
 
-  <script src="script.js"></script>
   <script>
-    // Ensure balloon animation starts IMMEDIATELY
-    document.addEventListener("DOMContentLoaded", () => {
+    const balloonContainer = document.getElementById("floating-balloons");
+
+    function random(num) {
+      return Math.floor(Math.random() * num);
+    }
+
+    function getRandomStyles() {
+      const r = random(255);
+      const g = random(255);
+      const b = random(255);
+      const top = window.innerHeight;
+      const left = random(window.innerWidth);
+      const dur = random(5) + 5;
+
+      return `
+        background-color: rgba(${r},${g},${b},0.7);
+        box-shadow: inset -7px -3px 10px rgba(${r - 10},${g - 10},${b - 10},0.7);
+        left: ${left}px;
+        top: ${top}px;
+        animation: float ${dur}s ease-in infinite;
+      `;
+    }
+
+    function createBalloons(num) {
+      for (let i = 0; i < num; i++) {
+        const balloon = document.createElement("div");
+        balloon.className = "balloon";
+        balloon.style.cssText = getRandomStyles();
+        balloonContainer.appendChild(balloon);
+      }
+    }
+
+    window.addEventListener("load", () => {
       createBalloons(30);
     });
   </script>
