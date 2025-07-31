@@ -1,31 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Day 1 Surprise</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    @media screen and (max-width: 480px) {
+      .day1-wrapper h1 {
+        font-size: 2.5rem;
+      }
+      .day1-wrapper h3 {
+        font-size: 2rem;
+      }
+      .day1-wrapper p {
+        font-size: 1.5rem;
+      }
+      img.round-cake {
+        width: 250px;
+        height: 250px;
+      }
+      .overlay-content {
+        max-width: 90%;
+        margin: 40px auto;
+      }
+    }
+  </style>
+</head>
+<body>
 
-      <!DOCTYPE html>
-      <html lang="en">
-      <head>
-      <meta charset="UTF-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-      <title>Day 1 Surprise</title>
-      <link rel="stylesheet" href="style.css" />
-
-      </head>
-      <body>
-
-      <div id="balloon-container">
-
-      <div class="day1-wrapper">
+  <div id="balloon-container">
+    <div class="day1-wrapper">
       <div class="overlay-content">
-      <h1>🎈 Day 1 Surprise 🎈</h1>
-      <p>You bring joy like balloons in the sky! <br> Babe you are the best part of my life with whom i spended more time than my boyfriend...You hold a special part in my life ! </p>
-      <h3>Now 2 Days to go for your bday</h3>
-      <img src="/images/52.jpg" class="round-cake" alt="Cake" />
+        <h1>🎈 Day 1 Surprise 🎈</h1>
+        <p>You bring joy like balloons in the sky! <br> Babe you are the best part of my life with whom i spended more time than my boyfriend...You hold a special part in my life ! </p>
+        <h3>Now 2 Days to go for your bday</h3>
+        <img src="/images/52.jpg" class="round-cake" alt="Cake" />
       </div>
-      </div>
-      </div>
+    </div>
+  </div>
 
-      <script src="script.js"></script>
-      <script>
-      window.onload = () => createBalloons(30);
-      
-      </script>
-      </body>
-      </html>
+  <script src="script.js"></script>
+  <script>
+    window.onload = () => createBalloons(30);
+  </script>
+</body>
+</html>
